@@ -1,8 +1,16 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import logo from "./logo.svg";
+import "./App.css";
 
 function App() {
+  const [nativeModule, setNativeModule] = React.useState(null);
+  React.useEffect(() => {
+    import("./native").then((native) => {
+      console.log({ native });
+      setNativeModule(native);
+    });
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
@@ -10,14 +18,13 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          onClick={() => {
+            nativeModule.greet("Alena");
+          }}
         >
-          Learn React
-        </a>
+          Greet Me!
+        </button>
       </header>
     </div>
   );
